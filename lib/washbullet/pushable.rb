@@ -12,11 +12,20 @@ module Washbullet
       Push.new(response.body)
     end
 
+    def self.list_pushes(client, params)
+      response = new(client, nil, nil, params).list_pushes
+      Washbullet::Pushable::PushList.new(response.body)
+    end
+
     def initialize(client, receiver, identifier, params)
       @client     = client
       @receiver   = receiver
       @identifier = identifier
       @params     = params
+    end
+
+    def list_pushes
+      client.get('/v2/pushes', @params)
     end
 
     def push

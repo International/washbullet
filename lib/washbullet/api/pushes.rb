@@ -1,6 +1,7 @@
 require 'washbullet/pushable'
 require 'washbullet/pushable/file'
 require 'washbullet/pushable/link'
+require 'washbullet/push_list'
 require 'washbullet/pushable/note'
 
 module Washbullet
@@ -19,7 +20,11 @@ module Washbullet
       end
 
       def get_pushes(modified_after = nil, cursor = nil)
-        raise NotImplementedError
+        Washbullet::Pushable.list_pushes(
+          self, {
+          modified_after: modified_after,
+          cursor: cursor
+        })
       end
 
       def delete_push(push_iden)
